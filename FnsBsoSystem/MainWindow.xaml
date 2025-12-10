@@ -1,0 +1,169 @@
+﻿<Window x:Class="FnsBsoSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="АИС Межрайонной ИФНС №6 - Учет БСО" Height="700" Width="1100"
+        
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        
+
+        WindowStartupLocation="CenterScreen" 
+        Background="{StaticResource ColorBg}">
+    <Window.Resources>
+        <!-- СТИЛЬ ДЛЯ ОСНОВНОЙ КНОПКИ (Использует твой ColorPrimary) -->
+        <Style x:Key="BtnMainPill" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="25" Background="{StaticResource ColorPrimary}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,12"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ПРОЗРАЧНОЙ КНОПКИ (Контур) -->
+        <Style x:Key="BtnOutlinePill" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="25" BorderBrush="White" BorderThickness="2" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30,12"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#22FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ССЫЛОК В МЕНЮ -->
+        <Style x:Key="BtnMenuText" TargetType="Button">
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource ColorPrimary}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- ... (Весь код выше с ресурсами и градиентами остается тем же) ... -->
+
+    <Grid>
+        <!-- ФОН и ДЕКОР (те же, что и раньше) -->
+        <Path Data="M 400,0 L 2000,0 L 2000,2000 L 0,2000 Z" Fill="White" Stretch="UniformToFill" HorizontalAlignment="Right" Margin="0"/>
+
+        <!-- СЕТКА КОНТЕНТА -->
+        <Grid Margin="50,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Меню -->
+                <RowDefinition Height="*"/>
+                <!-- Контент -->
+                <RowDefinition Height="Auto"/>
+                <!-- Подвал -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. ВЕРХНЕЕ МЕНЮ -->
+            <Border Grid.Row="0" Background="White" CornerRadius="40" Height="70" Padding="30,0">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" Color="Black" Opacity="0.1" ShadowDepth="5"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Логотип -->
+                    <Button Grid.Column="0" VerticalAlignment="Center" Click="NavHome" Style="{StaticResource BtnMenuText}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/IFNS_LOGO.png"/>
+                            <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+                                <TextBlock Text="Федеральная" FontWeight="Bold" FontSize="18" Foreground="#333"/>
+                                <TextBlock Text="Налоговая служба" FontWeight="Bold" FontSize="18" Foreground="#333"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- ССЫЛКИ МЕНЮ (Обработчики событий) -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <!-- Кнопка "Главная" возвращает на лендинг -->
+
+                        <!-- Остальные кнопки ведут на страницы -->
+                        <Button Content="Склад" Click="NavStock" Style="{StaticResource BtnMenuText}"/>
+                        <Button Content="История" Click="NavHistory" Style="{StaticResource BtnMenuText}"/>
+                        <Button Content="Аккаунт" Click="NavAccount" Style="{StaticResource BtnMenuText}"/>
+                    </StackPanel>
+
+                    <!-- Кнопки справа -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="Выход" Click="BtnExit" Style="{StaticResource BtnMenuText}" Foreground="#C62828"/>
+                        <Button x:Name="BtnNavReg" Click="NavRegistration" Content="Регистрация" Style="{StaticResource BtnMainPill}" Height="40" FontSize="12" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 2. КОНТЕНТ ЛЕНДИНГА (Текст слева) -->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" MaxWidth="650" Margin="20,0,0,50">
+                <TextBlock Text="АВТОМАТИЗАЦИЯ" FontSize="55" FontWeight="Bold" Foreground="{StaticResource ColorPrimary}" LineHeight="60"/>
+                <TextBlock Text="УЧЕТА БЛАНКОВ" FontSize="55" FontWeight="Light" Foreground="{StaticResource ColorPrimary}" LineHeight="60" Margin="0,-5,0,20"/>
+                <TextBlock Text="Управляйте операциями, отслеживайте движение документов и оптимизируйте работу склада в единой системе ИФНС №6."
+                           Foreground="{StaticResource ColorPrimary}" Opacity="0.8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,40"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Подробнее" Style="{StaticResource BtnMainPill}" Click="NavHistory"/>
+                    <Button Content="Перейти на склад" Style="{StaticResource BtnMainPill}" Margin="20,0,0,0" Click="NavStock"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Декор мышки -->
+            <Border Grid.Row="2" Width="24" Height="40" BorderBrush="White" BorderThickness="2" CornerRadius="12" HorizontalAlignment="Center" Opacity="0.6">
+                <Ellipse Width="4" Height="4" Fill="White" VerticalAlignment="Top" Margin="0,8,0,0"/>
+            </Border>
+        </Grid>
+
+        <!-- !!! ВАЖНОЕ ИЗМЕНЕНИЕ ЗДЕСЬ !!! -->
+        <!-- Фрейм лежит поверх Grid. Он занимает ряды 1 и 2 (под меню). -->
+        <!-- Margin="50,110,50,30" отступает сверху, чтобы не закрывать круглое меню -->
+        <Frame x:Name="MainFrame" 
+               NavigationUIVisibility="Hidden" 
+               Visibility="Hidden"
+               Background="White"
+               Margin="50,110,50,30"/>
+    </Grid>
+</Window>

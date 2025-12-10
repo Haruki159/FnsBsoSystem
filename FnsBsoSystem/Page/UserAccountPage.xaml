@@ -1,0 +1,266 @@
+﻿<Page x:Class="FnsBsoSystem.Page.UserAccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FnsBsoSystem.Page"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UserAccountPage">
+
+    <Page.Resources>
+        <!-- ЦВЕТА -->
+        <Color x:Key="ColorPrimary">#009CDF</Color>
+        <SolidColorBrush x:Key="BrushPrimary" Color="{StaticResource ColorPrimary}"/>
+        <SolidColorBrush x:Key="BrushText" Color="#333"/>
+        <SolidColorBrush x:Key="BrushLabel" Color="#888"/>
+
+        <!-- СТИЛЬ ДЛЯ ЗАГОЛОВКОВ ПОЛЕЙ (Label) -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource BrushLabel}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ЗНАЧЕНИЙ (Value) -->
+        <Style x:Key="ValueStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource BrushText}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ОСНОВНОЙ КНОПКИ (Pill) -->
+        <Style x:Key="BtnPrimary" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="20" Background="{StaticResource BrushPrimary}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,10"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ВТОРИЧНОЙ КНОПКИ (Outline) -->
+        <Style x:Key="BtnOutline" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource BrushPrimary}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="18" BorderBrush="{StaticResource BrushPrimary}" BorderThickness="1.5" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,8"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E1F5FE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="40,20,40,40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Заголовок -->
+            <RowDefinition Height="*"/>
+            <!-- Контент -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. ЗАГОЛОВОК -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,30">
+            <TextBlock Text="ЛИЧНЫЙ КАБИНЕТ" FontSize="28" FontWeight="Bold" Foreground="#333"/>
+            <TextBlock Text="Управление учетной записью и персональными данными" FontSize="14" Foreground="#888" Margin="2,5,0,0"/>
+            <Border Width="50" Height="4" Background="{StaticResource BrushPrimary}" HorizontalAlignment="Left" CornerRadius="2" Margin="0,15,0,0"/>
+        </StackPanel>
+
+        <!-- 2. ОСНОВНОЙ КОНТЕНТ (2 колонки) -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <!-- Левая колонка (Фото) -->
+                <ColumnDefinition Width="30"/>
+                <!-- Отступ -->
+                <ColumnDefinition Width="*"/>
+                <!-- Правая колонка (Инфо) -->
+            </Grid.ColumnDefinitions>
+
+            <!-- ЛЕВАЯ КАРТОЧКА: ПРОФИЛЬ -->
+            <Border Grid.Column="0" Background="White" CornerRadius="20" VerticalAlignment="Top">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="5" Opacity="0.05"/>
+                </Border.Effect>
+
+                <StackPanel Margin="30">
+                    <!-- Аватарка (Круглая) -->
+                    <!-- CornerRadius = половина от Width/Height для круга -->
+                    <Border Width="180" Height="180" CornerRadius="90" Margin="0,0,0,20" 
+                            BorderBrush="#E0E0E0" BorderThickness="1">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" Opacity="0.1" ShadowDepth="2"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <ImageBrush x:Name="ImgProfile" Stretch="UniformToFill" ImageSource="/Resources/LOG.png"/>
+                        </Border.Background>
+                    </Border>
+
+                    <TextBlock x:Name="LblShortName" Text="Иванов И.И." HorizontalAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#333"/>
+                    <TextBlock x:Name="LblRole" Text="Администратор" HorizontalAlignment="Center" FontSize="15" FontWeight="SemiBold" Foreground="{StaticResource BrushPrimary}" Margin="0,5,0,25"/>
+
+                    <!-- Кнопка загрузки фото -->
+                    <Button Content="📷 Сменить фото" Click="BtnAddPhoto_Click" Style="{StaticResource BtnOutline}" HorizontalAlignment="Center" Width="200"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ПРАВАЯ ЧАСТЬ: ИНФОРМАЦИЯ И БЕЗОПАСНОСТЬ -->
+            <StackPanel Grid.Column="2">
+
+                <!-- КАРТОЧКА 1: Данные -->
+                <Border Background="White" CornerRadius="20" Margin="0,0,0,25">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="5" Opacity="0.05"/>
+                    </Border.Effect>
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <!-- Заголовок -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Инфо -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Инфо -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Инфо -->
+                            <RowDefinition Height="Auto"/>
+                            <!-- Инфо -->
+                        </Grid.RowDefinitions>
+
+                        <!-- Заголовок блока -->
+                        <Grid Margin="0,0,0,25">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Персональные данные" FontSize="18" FontWeight="Bold" Foreground="#333"/>
+                                <TextBlock Text="Информация о сотруднике" FontSize="12" Foreground="#999" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <!-- Кнопка редактирования -->
+                            <Button Grid.Column="1" Content="Редактировать" Click="BtnEditProfile_Click" Style="{StaticResource BtnOutline}" Height="35" FontSize="12"/>
+                        </Grid>
+
+                        <!-- Таблица данных -->
+
+                        <!-- 1. ФИО -->
+                        <Grid Grid.Row="1" Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <!-- Увеличил ширину для длинных заголовков -->
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Добавил VerticalAlignment="Top", чтобы при переносе строки заголовок был сверху -->
+                            <TextBlock Text="ФИО" Style="{StaticResource LabelStyle}" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                            <!-- ВАЖНО: Grid.Column="1" -->
+                            <TextBlock Grid.Column="1" x:Name="LblFullName" Text="..." Style="{StaticResource ValueStyle}"/>
+                        </Grid>
+                        <Border Grid.Row="1" VerticalAlignment="Bottom" Height="1" Background="#F5F7FA" Margin="0,0,0,-7"/>
+
+                        <!-- 2. Отдел -->
+                        <Grid Grid.Row="2" Margin="0,15,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Отдел" Style="{StaticResource LabelStyle}" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                            <!-- ВАЖНО: Grid.Column="1" -->
+                            <TextBlock Grid.Column="1" x:Name="LblDept" Text="..." Style="{StaticResource ValueStyle}"/>
+                        </Grid>
+                        <Border Grid.Row="2" VerticalAlignment="Bottom" Height="1" Background="#F5F7FA" Margin="0,0,0,-7"/>
+
+                        <!-- 3. Должность -->
+                        <Grid Grid.Row="3" Margin="0,15,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Должность" Style="{StaticResource LabelStyle}" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                            <!-- ВАЖНО: Grid.Column="1" -->
+                            <TextBlock Grid.Column="1" x:Name="LblPos" Text="..." Style="{StaticResource ValueStyle}"/>
+                        </Grid>
+                        <Border Grid.Row="3" VerticalAlignment="Bottom" Height="1" Background="#F5F7FA" Margin="0,0,0,-7"/>
+
+                        <!-- 4. Логин -->
+                        <Grid Grid.Row="4" Margin="0,15,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Логин (System ID)" Style="{StaticResource LabelStyle}" VerticalAlignment="Center"/>
+                            <!-- ВАЖНО: Grid.Column="1" для Border -->
+                            <Border Grid.Column="1" Background="#E3F2FD" HorizontalAlignment="Left" CornerRadius="5" Padding="10,2">
+                                <TextBlock x:Name="LblLogin" Text="..." FontWeight="Bold" Foreground="{StaticResource BrushPrimary}"/>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- КАРТОЧКА 2: Безопасность (Ниже без изменений) -->
+                <Border Background="White" CornerRadius="20">
+                    <!-- ... тот же код, что был ... -->
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="5" Opacity="0.05"/>
+                    </Border.Effect>
+                    <Grid Margin="30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Margin="0,0,0,20">
+                            <TextBlock Text="Безопасность" FontSize="18" FontWeight="Bold" Foreground="#333"/>
+                            <TextBlock Text="Смена пароля доступа" FontSize="12" Foreground="#999" Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border CornerRadius="20" Background="#F5F7FA" Height="42">
+                                <TextBox x:Name="TxtNewPass" 
+                                         Background="Transparent" BorderThickness="0" 
+                                         VerticalContentAlignment="Center" Padding="15,0"
+                                         FontSize="14"
+                                         Tag="Введите новый пароль..."/>
+                            </Border>
+
+                            <Button Grid.Column="2" Content="Обновить пароль" Click="BtnChangePass_Click" 
+                                    Style="{StaticResource BtnPrimary}" Width="160"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

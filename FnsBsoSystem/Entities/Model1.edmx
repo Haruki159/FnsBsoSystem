@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище IFNS6_BsoSystemModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Log_Operations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OperationDate" Type="datetime" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ActionType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Details" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Main_Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DeptId" Type="int" Nullable="false" />
+          <Property Name="PosId" Type="int" Nullable="false" />
+          <Property Name="RankId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="152" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Main_Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="Series" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartNumber" Type="int" Nullable="false" />
+          <Property Name="EndNumber" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="OwnerId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ref_BlankStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ref_BlankTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FormCode" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Ref_Departments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeptName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ref_Positions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PosName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ref_Ranks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RankName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sys_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Emp_Dept">
+          <End Role="Ref_Departments" Type="Self.Ref_Departments" Multiplicity="1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Pos">
+          <End Role="Ref_Positions" Type="Self.Ref_Positions" Multiplicity="1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Positions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="PosId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Rank">
+          <End Role="Ref_Ranks" Type="Self.Ref_Ranks" Multiplicity="0..1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Ranks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Owner">
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="0..1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Main_Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Status">
+          <End Role="Ref_BlankStatuses" Type="Self.Ref_BlankStatuses" Multiplicity="1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_BlankStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Type">
+          <End Role="Ref_BlankTypes" Type="Self.Ref_BlankTypes" Multiplicity="1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_BlankTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Log_User">
+          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+          <End Role="Log_Operations" Type="Self.Log_Operations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log_Operations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Emp">
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="1" />
+          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Main_Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sys_Users">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище IFNS6_BsoSystemModelContainer">
+          <EntitySet Name="Log_Operations" EntityType="Self.Log_Operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Main_Employees" EntityType="Self.Main_Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Main_Inventory" EntityType="Self.Main_Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_BlankStatuses" EntityType="Self.Ref_BlankStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_BlankTypes" EntityType="Self.Ref_BlankTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_Departments" EntityType="Self.Ref_Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_Positions" EntityType="Self.Ref_Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_Ranks" EntityType="Self.Ref_Ranks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_Users" EntityType="Self.Sys_Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Emp_Dept" Association="Self.FK_Emp_Dept">
+            <End Role="Ref_Departments" EntitySet="Ref_Departments" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Pos" Association="Self.FK_Emp_Pos">
+            <End Role="Ref_Positions" EntitySet="Ref_Positions" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Rank" Association="Self.FK_Emp_Rank">
+            <End Role="Ref_Ranks" EntitySet="Ref_Ranks" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Owner" Association="Self.FK_Inv_Owner">
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Status" Association="Self.FK_Inv_Status">
+            <End Role="Ref_BlankStatuses" EntitySet="Ref_BlankStatuses" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Type" Association="Self.FK_Inv_Type">
+            <End Role="Ref_BlankTypes" EntitySet="Ref_BlankTypes" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Log_User" Association="Self.FK_Log_User">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Log_Operations" EntitySet="Log_Operations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Emp" Association="Self.FK_User_Emp">
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IFNS6_BsoSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Log_Operations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperationDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ActionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Details" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_Log_User" FromRole="Log_Operations" ToRole="Sys_Users" />
+        </EntityType>
+        <EntityType Name="Main_Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeptId" Type="Int32" Nullable="false" />
+          <Property Name="PosId" Type="Int32" Nullable="false" />
+          <Property Name="RankId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="FullName" Type="String" MaxLength="152" FixedLength="false" Unicode="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Ref_Departments" Relationship="Self.FK_Emp_Dept" FromRole="Main_Employees" ToRole="Ref_Departments" />
+          <NavigationProperty Name="Ref_Positions" Relationship="Self.FK_Emp_Pos" FromRole="Main_Employees" ToRole="Ref_Positions" />
+          <NavigationProperty Name="Ref_Ranks" Relationship="Self.FK_Emp_Rank" FromRole="Main_Employees" ToRole="Ref_Ranks" />
+          <NavigationProperty Name="Main_Inventory" Relationship="Self.FK_Inv_Owner" FromRole="Main_Employees" ToRole="Main_Inventory" />
+          <NavigationProperty Name="Sys_Users" Relationship="Self.FK_User_Emp" FromRole="Main_Employees" ToRole="Sys_Users" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Main_Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Series" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartNumber" Type="Int32" Nullable="false" />
+          <Property Name="EndNumber" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Main_Employees" Relationship="Self.FK_Inv_Owner" FromRole="Main_Inventory" ToRole="Main_Employees" />
+          <NavigationProperty Name="Ref_BlankStatuses" Relationship="Self.FK_Inv_Status" FromRole="Main_Inventory" ToRole="Ref_BlankStatuses" />
+          <NavigationProperty Name="Ref_BlankTypes" Relationship="Self.FK_Inv_Type" FromRole="Main_Inventory" ToRole="Ref_BlankTypes" />
+        </EntityType>
+        <EntityType Name="Ref_BlankStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Main_Inventory" Relationship="Self.FK_Inv_Status" FromRole="Ref_BlankStatuses" ToRole="Main_Inventory" />
+        </EntityType>
+        <EntityType Name="Ref_BlankTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FormCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Main_Inventory" Relationship="Self.FK_Inv_Type" FromRole="Ref_BlankTypes" ToRole="Main_Inventory" />
+        </EntityType>
+        <EntityType Name="Ref_Departments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Main_Employees" Relationship="Self.FK_Emp_Dept" FromRole="Ref_Departments" ToRole="Main_Employees" />
+        </EntityType>
+        <EntityType Name="Ref_Positions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PosName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Main_Employees" Relationship="Self.FK_Emp_Pos" FromRole="Ref_Positions" ToRole="Main_Employees" />
+        </EntityType>
+        <EntityType Name="Ref_Ranks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RankName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Main_Employees" Relationship="Self.FK_Emp_Rank" FromRole="Ref_Ranks" ToRole="Main_Employees" />
+        </EntityType>
+        <EntityType Name="Sys_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Log_Operations" Relationship="Self.FK_Log_User" FromRole="Sys_Users" ToRole="Log_Operations" />
+          <NavigationProperty Name="Main_Employees" Relationship="Self.FK_User_Emp" FromRole="Sys_Users" ToRole="Main_Employees" />
+        </EntityType>
+        <Association Name="FK_Log_User">
+          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="1" />
+          <End Role="Log_Operations" Type="Self.Log_Operations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sys_Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log_Operations">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Dept">
+          <End Role="Ref_Departments" Type="Self.Ref_Departments" Multiplicity="1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Pos">
+          <End Role="Ref_Positions" Type="Self.Ref_Positions" Multiplicity="1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Positions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="PosId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Emp_Rank">
+          <End Role="Ref_Ranks" Type="Self.Ref_Ranks" Multiplicity="0..1" />
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Ranks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Employees">
+              <PropertyRef Name="RankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Owner">
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="0..1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Main_Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Emp">
+          <End Role="Main_Employees" Type="Self.Main_Employees" Multiplicity="1" />
+          <End Role="Sys_Users" Type="Self.Sys_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Main_Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sys_Users">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Status">
+          <End Role="Ref_BlankStatuses" Type="Self.Ref_BlankStatuses" Multiplicity="1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_BlankStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inv_Type">
+          <End Role="Ref_BlankTypes" Type="Self.Ref_BlankTypes" Multiplicity="1" />
+          <End Role="Main_Inventory" Type="Self.Main_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_BlankTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Main_Inventory">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IFNS6_BsoSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Log_Operations" EntityType="Self.Log_Operations" />
+          <EntitySet Name="Main_Employees" EntityType="Self.Main_Employees" />
+          <EntitySet Name="Main_Inventory" EntityType="Self.Main_Inventory" />
+          <EntitySet Name="Ref_BlankStatuses" EntityType="Self.Ref_BlankStatuses" />
+          <EntitySet Name="Ref_BlankTypes" EntityType="Self.Ref_BlankTypes" />
+          <EntitySet Name="Ref_Departments" EntityType="Self.Ref_Departments" />
+          <EntitySet Name="Ref_Positions" EntityType="Self.Ref_Positions" />
+          <EntitySet Name="Ref_Ranks" EntityType="Self.Ref_Ranks" />
+          <EntitySet Name="Sys_Users" EntityType="Self.Sys_Users" />
+          <AssociationSet Name="FK_Log_User" Association="Self.FK_Log_User">
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+            <End Role="Log_Operations" EntitySet="Log_Operations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Dept" Association="Self.FK_Emp_Dept">
+            <End Role="Ref_Departments" EntitySet="Ref_Departments" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Pos" Association="Self.FK_Emp_Pos">
+            <End Role="Ref_Positions" EntitySet="Ref_Positions" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Emp_Rank" Association="Self.FK_Emp_Rank">
+            <End Role="Ref_Ranks" EntitySet="Ref_Ranks" />
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Owner" Association="Self.FK_Inv_Owner">
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Emp" Association="Self.FK_User_Emp">
+            <End Role="Main_Employees" EntitySet="Main_Employees" />
+            <End Role="Sys_Users" EntitySet="Sys_Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Status" Association="Self.FK_Inv_Status">
+            <End Role="Ref_BlankStatuses" EntitySet="Ref_BlankStatuses" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inv_Type" Association="Self.FK_Inv_Type">
+            <End Role="Ref_BlankTypes" EntitySet="Ref_BlankTypes" />
+            <End Role="Main_Inventory" EntitySet="Main_Inventory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище IFNS6_BsoSystemModelContainer" CdmEntityContainer="IFNS6_BsoSystemEntities">
+          <EntitySetMapping Name="Log_Operations">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Log_Operations">
+              <MappingFragment StoreEntitySet="Log_Operations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OperationDate" ColumnName="OperationDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Employees">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Main_Employees">
+              <MappingFragment StoreEntitySet="Main_Employees">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="PosId" ColumnName="PosId" />
+                <ScalarProperty Name="RankId" ColumnName="RankId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Inventory">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Main_Inventory">
+              <MappingFragment StoreEntitySet="Main_Inventory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="StartNumber" ColumnName="StartNumber" />
+                <ScalarProperty Name="EndNumber" ColumnName="EndNumber" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ref_BlankStatuses">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Ref_BlankStatuses">
+              <MappingFragment StoreEntitySet="Ref_BlankStatuses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ref_BlankTypes">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Ref_BlankTypes">
+              <MappingFragment StoreEntitySet="Ref_BlankTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="FormCode" ColumnName="FormCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ref_Departments">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Ref_Departments">
+              <MappingFragment StoreEntitySet="Ref_Departments">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ref_Positions">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Ref_Positions">
+              <MappingFragment StoreEntitySet="Ref_Positions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PosName" ColumnName="PosName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ref_Ranks">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Ref_Ranks">
+              <MappingFragment StoreEntitySet="Ref_Ranks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RankName" ColumnName="RankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_Users">
+            <EntityTypeMapping TypeName="IFNS6_BsoSystemModel.Sys_Users">
+              <MappingFragment StoreEntitySet="Sys_Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

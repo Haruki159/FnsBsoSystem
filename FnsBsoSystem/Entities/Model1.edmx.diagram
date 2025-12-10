@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f813d8cbdc8f49368345f48da8efb0f2" Name="Diagram1">
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Log_Operations" Width="1.5" PointX="7.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Main_Employees" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Main_Inventory" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Ref_BlankStatuses" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Ref_BlankTypes" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Ref_Departments" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Ref_Positions" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Ref_Ranks" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IFNS6_BsoSystemModel.Sys_Users" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Log_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Emp_Dept" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Emp_Pos" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Emp_Rank" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Inv_Owner" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_User_Emp" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Inv_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IFNS6_BsoSystemModel.FK_Inv_Type" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
