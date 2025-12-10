@@ -44,7 +44,7 @@ namespace FnsBsoSystem.Page
                     {
                         // Данные учетной записи
                         LblLogin.Text = user.Login;
-                        LblRole.Text = user.Role; // Показываем роль под фото
+                        LblRole.Text = user.Sys_Roles.RoleName; // Показываем роль под фото
 
                         // Данные сотрудника (через связь)
                         if (user.Main_Employees != null)

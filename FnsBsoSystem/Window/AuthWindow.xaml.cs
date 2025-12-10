@@ -1,4 +1,5 @@
-﻿using FnsBsoSystem.Entities;
+﻿using FnsBsoSystem.AdminPanel;
+using FnsBsoSystem.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,15 +30,22 @@ namespace FnsBsoSystem
                 using (var db = new IFNS6_BsoSystemEntities())
                 {
                     // 1. Проверяем логин и пароль
-                    // Важно: У PasswordBox свойство .Password, а не .Text
                     var user = db.Sys_Users.FirstOrDefault(u => u.Login == TxtLogin.Text && u.Password == TxtPass.Password);
 
                     if (user != null)
                     {
+                        // ПРОВЕРКА НА БЛОКИРОВКУ (по полю IsActive из Main_Employees)
+                        // Если Main_Employees не null и IsActive == false, значит заблокирован
+                        if (user.Main_Employees != null && user.Main_Employees.IsActive == false)
+                        {
+                            MessageBox.Show("Ваша учетная запись заблокирована! Обратитесь к администратору.", "Доступ запрещен", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+
                         // 2. Запоминаем ID
                         App.CurrentUserId = user.Id;
 
-                        // 3. Пишем в журнал, что пользователь ВОШЕЛ
+                        // 3. Пишем в журнал
                         var loginLog = new Log_Operations
                         {
                             UserId = user.Id,
@@ -48,11 +56,22 @@ namespace FnsBsoSystem
                         db.Log_Operations.Add(loginLog);
                         db.SaveChanges();
 
-                        // 4. Показываем сообщение и открываем программу
-                        MessageBox.Show($"Добро пожаловать, {user.Login}!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                        // 4. ПРОВЕРКА РОЛИ И ПЕРЕНАПРАВЛЕНИЕ
+                        // Допустим, у тебя в Sys_Roles роль с именем "Admin" имеет Id = 1
+                        // Проверь в базе, какой ID у Админа!
+                        if (user.Role == 1) // Замени 1 на реальный ID админа из твоей таблицы Sys_Roles
+                        {
+                            MessageBox.Show("Добро пожаловать в Админ-панель!", "Администратор", MessageBoxButton.OK, MessageBoxImage.Information);
+                            AdminMainWindow adminWindow = new AdminMainWindow(user);
+                            adminWindow.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Добро пожаловать, {user.Login}!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MainWindow main = new MainWindow(user); // Используем наш новый конструктор
+                            main.Show();
+                        }
 
-                        MainWindow main = new MainWindow();
-                        main.Show();
                         this.Close();
                     }
                     else

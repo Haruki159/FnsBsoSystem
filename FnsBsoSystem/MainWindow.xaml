@@ -2,12 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="АИС Межрайонной ИФНС №6 - Учет БСО" Height="700" Width="1100"
-        
         WindowState="Maximized"
         WindowStyle="None"
         ResizeMode="NoResize"
-        
-
         WindowStartupLocation="CenterScreen" 
         Background="{StaticResource ColorBg}">
     <Window.Resources>

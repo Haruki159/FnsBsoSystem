@@ -18,6 +18,7 @@ namespace FnsBsoSystem.Entities
         public Main_Employees()
         {
             this.Main_Inventory = new HashSet<Main_Inventory>();
+            this.Main_Inventory1 = new HashSet<Main_Inventory>();
             this.Sys_Users = new HashSet<Sys_Users>();
         }
     
@@ -37,6 +38,8 @@ namespace FnsBsoSystem.Entities
         public virtual Ref_Ranks Ref_Ranks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Main_Inventory> Main_Inventory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Main_Inventory> Main_Inventory1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sys_Users> Sys_Users { get; set; }
     }

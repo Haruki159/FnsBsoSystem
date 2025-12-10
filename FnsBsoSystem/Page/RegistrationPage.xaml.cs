@@ -34,6 +34,9 @@ namespace FnsBsoSystem.Page
                 ComboDept.ItemsSource = db.Ref_Departments.ToList();
                 ComboPos.ItemsSource = db.Ref_Positions.ToList();
                 ComboRank.ItemsSource = db.Ref_Ranks.ToList();
+
+                // ДОБАВЬ ЭТО:
+                ComboRole.ItemsSource = db.Sys_Roles.ToList();
             }
         }
 
@@ -103,12 +106,14 @@ namespace FnsBsoSystem.Page
                     db.SaveChanges(); // Получаем ID
 
                     // 2. Создаем Пользователя
+                    // 2. Создаем Пользователя
                     var newUser = new Sys_Users
                     {
                         EmployeeId = newEmp.Id,
                         Login = TxtLogin.Text,
                         Password = TxtPass.Text,
-                        Role = (ComboRole.SelectedItem as ComboBoxItem).Content.ToString()
+                        // Теперь это будет int, который соответствует ID роли в базе
+                        Role = (int)ComboRole.SelectedValue
                     };
                     db.Sys_Users.Add(newUser);
                     db.SaveChanges();
@@ -136,6 +141,16 @@ namespace FnsBsoSystem.Page
             {
                 MessageBox.Show("Ошибка регистрации: " + ex.Message);
             }
+        }
+
+        private void ComboPos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

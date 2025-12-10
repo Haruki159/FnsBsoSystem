@@ -198,7 +198,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Должность" Style="{StaticResource LabelStyle}"/>
-                            <ComboBox x:Name="ComboPos" DisplayMemberPath="PosName" SelectedValuePath="Id" Margin="0,0,0,20"/>
+                            <ComboBox x:Name="ComboPos" DisplayMemberPath="PosName" SelectedValuePath="Id" Margin="0,0,0,20" SelectionChanged="ComboPos_SelectionChanged"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="Классный чин" Style="{StaticResource LabelStyle}"/>
@@ -236,11 +236,10 @@
 
                     <!-- Роль -->
                     <TextBlock Text="Роль пользователя" Style="{StaticResource LabelStyle}"/>
-                    <ComboBox x:Name="ComboRole" Margin="0,0,0,40">
-                        <ComboBoxItem Content="Admin"/>
-                        <ComboBoxItem Content="Storekeeper"/>
-                        <ComboBoxItem Content="Viewer" IsSelected="True"/>
-                    </ComboBox>
+                    <ComboBox x:Name="ComboRole" 
+                                DisplayMemberPath="RoleName" 
+                                SelectedValuePath="Id" 
+                                Margin="0,0,0,40"/>
 
                     <!-- КНОПКА СОХРАНЕНИЯ -->
                     <Button Content="Зарегистрировать сотрудника" 

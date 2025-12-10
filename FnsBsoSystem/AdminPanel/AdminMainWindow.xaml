@@ -1,0 +1,150 @@
+﻿<Window x:Class="FnsBsoSystem.AdminPanel.AdminMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FnsBsoSystem.AdminPanel"
+        mc:Ignorable="d"
+        Title="Панель администратора - АИС Учет БСО" Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen" Background="#F8F9FA">
+
+    <Window.Resources>
+        <!-- ОСНОВНОЙ ЦВЕТ (Удалите, если он уже есть в App.xaml) -->
+        <SolidColorBrush x:Key="ColorPrimary" Color="#2980B9"/>
+        <SolidColorBrush x:Key="ColorDanger" Color="#E74C3C"/>
+        <!-- Для кнопки блокировки -->
+
+        <!-- ТВОИ СТИЛИ -->
+        <Style x:Key="BtnMainPill" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="5 0 5 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="20" Background="{StaticResource ColorPrimary}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,8"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ КРАСНОЙ КНОПКИ (На основе твоего MainPill) -->
+        <Style x:Key="BtnDangerPill" TargetType="Button" BasedOn="{StaticResource BtnMainPill}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="20" Background="{StaticResource ColorDanger}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,8"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ДЛЯ ПРОЗРАЧНОЙ КНОПКИ (Контур) -->
+        <Style x:Key="BtnOutlinePill" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="20" BorderBrush="White" BorderThickness="1.5" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20,8"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- СТИЛЬ ВКЛАДОК БОКОВОГО МЕНЮ -->
+        <Style TargetType="TabItem">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#555"/>
+            <Setter Property="Padding" Value="15,0,0,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <!-- Подсветка активной вкладки -->
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource ColorPrimary}"/>
+                    <Setter Property="Background" Value="#EAF2F8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- ФОН (Тот же, что в Main) -->
+        <Path Data="M 400,0 L 2000,0 L 2000,2000 L 0,2000 Z" Fill="White" Stretch="UniformToFill" HorizontalAlignment="Right"/>
+
+        <Grid Margin="50,30" Cursor="">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 1. ВЕРХНЕЕ МЕНЮ (Админ-стиль) -->
+            <Border Grid.Row="0" Background="White" CornerRadius="40" Height="70" Padding="30,0">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" Color="Black" Opacity="0.1" ShadowDepth="5"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/IFNS_LOGO.png"/>
+                        <StackPanel Margin="10 0 0 0" VerticalAlignment="Center">
+                            <TextBlock Text="Федеральная" FontWeight="Bold" FontSize="18" Foreground="#333"/>
+                            <TextBlock Text="Налоговая служба" FontWeight="Bold" FontSize="18" Foreground="#333"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button Content="Пользователи" Click="NavUsers_Click" Style="{StaticResource BtnMainPill}"/>
+                        <Button Content="Справочники" Click="NavDicts_Click" Style="{StaticResource BtnMainPill}"/>
+                        <Button Content="Журнал" Click="NavLogs_Click" Style="{StaticResource BtnMainPill}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="В рабочую зону" Click="BtnSwitchToUser_Click" Style="{StaticResource BtnMainPill}" Background="{StaticResource ColorPrimary}" Height="40" FontSize="12"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 2. ФРЕЙМ ДЛЯ СТРАНИЦ -->
+            <Frame x:Name="AdminFrame" Grid.Row="1" 
+                   NavigationUIVisibility="Hidden" 
+                   Background="White"
+                   Margin="0,30,0,0"/>
+        </Grid>
+    </Grid>
+</Window>

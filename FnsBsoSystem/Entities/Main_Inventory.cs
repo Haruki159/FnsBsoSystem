@@ -22,8 +22,10 @@ namespace FnsBsoSystem.Entities
         public int StatusId { get; set; }
         public Nullable<int> OwnerId { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<int> SenderId { get; set; }
     
         public virtual Main_Employees Main_Employees { get; set; }
+        public virtual Main_Employees Main_Employees1 { get; set; }
         public virtual Ref_BlankStatuses Ref_BlankStatuses { get; set; }
         public virtual Ref_BlankTypes Ref_BlankTypes { get; set; }
     }

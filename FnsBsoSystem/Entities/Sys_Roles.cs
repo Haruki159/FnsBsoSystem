@@ -12,23 +12,18 @@ namespace FnsBsoSystem.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Sys_Users
+    public partial class Sys_Roles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Sys_Users()
+        public Sys_Roles()
         {
-            this.Log_Operations = new HashSet<Log_Operations>();
+            this.Sys_Users = new HashSet<Sys_Users>();
         }
     
         public int Id { get; set; }
-        public int EmployeeId { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public int Role { get; set; }
+        public string RoleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Log_Operations> Log_Operations { get; set; }
-        public virtual Main_Employees Main_Employees { get; set; }
-        public virtual Sys_Roles Sys_Roles { get; set; }
+        public virtual ICollection<Sys_Users> Sys_Users { get; set; }
     }
 }

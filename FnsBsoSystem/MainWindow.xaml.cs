@@ -24,6 +24,8 @@ namespace FnsBsoSystem
     /// </summary>
     public partial class MainWindow 
     {
+        private Sys_Users _currentUser;
+
         public MainWindow() 
         {
             InitializeComponent();
@@ -32,6 +34,21 @@ namespace FnsBsoSystem
             Manager.MainFrame = MainFrame;
             Manager.MainFrame.Navigate(new StockPage()); 
         }
+
+        public MainWindow(Sys_Users user)
+        {
+            InitializeComponent();
+            _currentUser = user;
+
+            // Если нужно, запиши ID в глобальную переменную, как ты делал
+            App.CurrentUserId = user.Id;
+
+            CheckAccess();
+            Manager.MainFrame = MainFrame;
+            Manager.MainFrame.Navigate(new StockPage());
+        }
+
+
         private void NavStock(object sender, RoutedEventArgs e)
         {
             MainFrame.Visibility = Visibility.Visible;
@@ -83,7 +100,7 @@ namespace FnsBsoSystem
                     {
                         // Логика: Доступ к регистрации имеют только Admin и Viewer (Босс)
                         // Кладовщик (Storekeeper) кнопку не увидит.
-                        if (user.Role == "Admin" || user.Role == "Viewer")
+                        if (user.Role == 1 || user.Role == 3)
                         {
                             BtnNavReg.Visibility = Visibility.Visible; // Кнопка есть в XAML с x:Name="BtnNavReg"
                         }

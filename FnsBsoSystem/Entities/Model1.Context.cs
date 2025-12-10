@@ -33,6 +33,8 @@ namespace FnsBsoSystem.Entities
         public virtual DbSet<Ref_Departments> Ref_Departments { get; set; }
         public virtual DbSet<Ref_Positions> Ref_Positions { get; set; }
         public virtual DbSet<Ref_Ranks> Ref_Ranks { get; set; }
+        public virtual DbSet<Sys_Roles> Sys_Roles { get; set; }
         public virtual DbSet<Sys_Users> Sys_Users { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }
