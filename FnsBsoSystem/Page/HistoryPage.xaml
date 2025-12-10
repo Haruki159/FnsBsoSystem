@@ -85,6 +85,20 @@
 
             <!-- Декоративная линия -->
             <Border Width="50" Height="4" Background="{StaticResource BrushPrimary}" HorizontalAlignment="Left" CornerRadius="2" Margin="0,15,0,0"/>
+            <!-- Внутри StackPanel, под заголовком -->
+            <Button Content="📥 Экспорт логов" 
+                    Click="BtnExport_Click" 
+                    Width="110" Height="30" 
+                    Background="#28A745" Foreground="White" 
+                    Cursor="Hand" BorderThickness="0" 
+                    Margin="0,15,0,0" HorizontalAlignment="Left">
+                <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                </Button.Resources>
+            </Button>
+            <Border Width="50" Height="4" Background="{StaticResource BrushPrimary}" HorizontalAlignment="Left" CornerRadius="2" Margin="0,15,0,0"/>
         </StackPanel>
 
         <!-- 2. ТАБЛИЦА В "КАРТОЧКЕ" -->
@@ -119,7 +133,7 @@
                         </DataGridTextColumn>
 
                         <!-- Пользователь -->
-                        <DataGridTextColumn Header="Пользователь" Binding="{Binding UserName}" Width="200">
+                        <DataGridTextColumn Header="Пользователь" Binding="{Binding UserName}" Width="250">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Foreground" Value="{StaticResource BrushPrimary}"/>
